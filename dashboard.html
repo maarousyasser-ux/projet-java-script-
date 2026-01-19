@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <nav class="sidebar">
+        <h2>SchoolDB</h2>
+        <a href="dashboard.html" class="active">Dashboard</a>
+        <a href="clients.html">Clients</a>
+        <a href="products.html">Products</a>
+        <a href="orders.html">Orders</a>
+        <a href="#" onclick="logout()" class="logout-btn">Logout</a>
+    </nav>
+    <main class="main-content">
+        <header>
+            <h1>Overview</h1>
+        </header>
+        <div class="card-grid">
+            <div class="card">
+                <h3>Total Clients</h3>
+                <div class="value" id="clientCount">0</div>
+            </div>
+            <div class="card">
+                <h3>Total Products</h3>
+                <div class="value" id="productCount">0</div>
+            </div>
+            <div class="card">
+                <h3>Total Orders</h3>
+                <div class="value" id="orderCount">0</div>
+            </div>
+            <div class="card">
+                <h3>Revenue</h3>
+                <div class="value" id="revenueCount">$0</div>
+            </div>
+        </div>
+    </main>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+  
+        const clients = db.getAll(DB_KEYS.CLIENTS);
+        const products = db.getAll(DB_KEYS.PRODUCTS);
+        const orders = db.getAll(DB_KEYS.ORDERS);
+        
+        document.getElementById('clientCount').innerText = clients.length;
+        document.getElementById('productCount').innerText = products.length;
+        document.getElementById('orderCount').innerText = orders.length;
+        
+        const total = orders.reduce((sum, order) => sum + parseFloat(order.total), 0);
+        document.getElementById('revenueCount').innerText = '$' + total.toFixed(2);
+    </script>
+</body>
+</html>
